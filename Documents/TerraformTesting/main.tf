@@ -121,7 +121,7 @@ resource "azurerm_network_security_rule" "http" {
 
 # NOTE: this allows HTTPS from any network
 resource "azurerm_network_security_rule" "https" {
-  name                        = "http"
+  name                        = "https"
   resource_group_name         = azurerm_windows_virtual_machine.vm1.resource_group_name
   network_security_group_name = azurerm_network_security_group.nsg1.name
   priority                    = 103
@@ -132,4 +132,9 @@ resource "azurerm_network_security_rule" "https" {
   destination_port_range      = "443"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
+}
+
+resource "azurerm_subnet_network_security_group_association" "nsg-associate1" {
+  subnet_id                 = azurerm_subnet.subnet1.id
+  network_security_group_id = azurerm_network_security_group.nsg1.id
 }
